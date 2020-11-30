@@ -20,9 +20,7 @@ namespace Pharmacy.DB
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string MobileNo { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Country { get; set; }
+        public Nullable<int> LocationId { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
@@ -34,7 +32,9 @@ namespace Pharmacy.DB
         public string CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> RoleId { get; set; }
+        public string ReasonForSeeingDoctor { get; set; }
     
+        public virtual Location Location { get; set; }
         public virtual Role Role { get; set; }
     }
 }
