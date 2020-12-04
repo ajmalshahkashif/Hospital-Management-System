@@ -8,14 +8,14 @@
         <EntityTypeShape EntityType="HospitalModel.Credential" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="HospitalModel.Location" Width="1.5" PointX="0.75" PointY="2.375" />
         <EntityTypeShape EntityType="HospitalModel.Role" Width="1.5" PointX="0.75" PointY="7.375" />
-        <EntityTypeShape EntityType="HospitalModel.User" Width="1.5" PointX="3" PointY="1.125" />
         <EntityTypeShape EntityType="HospitalModel.CredentialRole" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="HospitalModel.Permission" Width="1.5" PointX="5.75" PointY="6.75" />
         <EntityTypeShape EntityType="HospitalModel.RolePermission" Width="1.5" PointX="7.75" PointY="0.75" />
         <AssociationConnector Association="HospitalModel.FK_Location_Location1" />
+        <EntityTypeShape EntityType="HospitalModel.User" Width="1.5" PointX="3" PointY="3.375" />
         <AssociationConnector Association="HospitalModel.FK_User_Location" />
         <AssociationConnector Association="HospitalModel.FK_User_Role" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

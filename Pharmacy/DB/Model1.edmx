@@ -88,6 +88,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="RoleId" Type="int" />
           <Property Name="ReasonForSeeingDoctor" Type="nvarchar" MaxLength="200" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <Association Name="FK_Location_Location1">
           <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
@@ -171,7 +172,6 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <EntitySet Name="Credentials" EntityType="HospitalModel.Credential" />
           <EntitySet Name="Locations" EntityType="HospitalModel.Location" />
           <EntitySet Name="Roles" EntityType="HospitalModel.Role" />
-          <EntitySet Name="Users" EntityType="HospitalModel.User" />
           <EntitySet Name="CredentialRoles" EntityType="HospitalModel.CredentialRole" />
           <EntitySet Name="Permissions" EntityType="HospitalModel.Permission" />
           <EntitySet Name="RolePermissions" EntityType="HospitalModel.RolePermission" />
@@ -179,6 +179,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             <End Role="Location" EntitySet="Locations" />
             <End Role="Location1" EntitySet="Locations" />
           </AssociationSet>
+          <EntitySet Name="Users" EntityType="HospitalModel.User" />
           <AssociationSet Name="FK_User_Location" Association="HospitalModel.FK_User_Location">
             <End Role="Location" EntitySet="Locations" />
             <End Role="User" EntitySet="Users" />
@@ -187,7 +188,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             <End Role="Role" EntitySet="Roles" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="Credential">
           <Key>
             <PropertyRef Name="UserName" />
@@ -220,32 +221,6 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="Users" Relationship="HospitalModel.FK_User_Role" FromRole="Role" ToRole="User" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LocationId" Type="Int32" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
-          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="MaritalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Weight" Type="Int32" />
-          <Property Name="Height" Type="Int32" />
-          <Property Name="DoctorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RoleId" Type="Int32" />
-          <Property Name="ReasonForSeeingDoctor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Location" Relationship="HospitalModel.FK_User_Location" FromRole="User" ToRole="Location" />
-          <NavigationProperty Name="Role" Relationship="HospitalModel.FK_User_Role" FromRole="User" ToRole="Role" />
         </EntityType>
         <EntityType Name="CredentialRole">
           <Key>
@@ -284,6 +259,33 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LocationId" Type="Int32" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaritalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Int32" />
+          <Property Name="Height" Type="Int32" />
+          <Property Name="DoctorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="ReasonForSeeingDoctor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Location" Relationship="HospitalModel.FK_User_Location" FromRole="User" ToRole="Location" />
+          <NavigationProperty Name="Role" Relationship="HospitalModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
         <Association Name="FK_User_Location">
           <End Type="HospitalModel.Location" Role="Location" Multiplicity="0..1" />
           <End Type="HospitalModel.User" Role="User" Multiplicity="*" />
@@ -308,7 +310,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -346,31 +348,6 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="HospitalModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="ReasonForSeeingDoctor" ColumnName="ReasonForSeeingDoctor" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
-                <ScalarProperty Name="Height" ColumnName="Height" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CredentialRoles">
             <EntityTypeMapping TypeName="HospitalModel.CredentialRole">
               <MappingFragment StoreEntitySet="CredentialRole">
@@ -394,6 +371,32 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
               <MappingFragment StoreEntitySet="RolePermission">
                 <ScalarProperty Name="PermissionId" ColumnName="PermissionId" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="HospitalModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ReasonForSeeingDoctor" ColumnName="ReasonForSeeingDoctor" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

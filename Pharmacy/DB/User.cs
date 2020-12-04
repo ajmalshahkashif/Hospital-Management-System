@@ -33,6 +33,7 @@ namespace Pharmacy.DB
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> RoleId { get; set; }
         public string ReasonForSeeingDoctor { get; set; }
+        public string Comments { get; set; }
     
         public virtual Location Location { get; set; }
         public virtual Role Role { get; set; }
