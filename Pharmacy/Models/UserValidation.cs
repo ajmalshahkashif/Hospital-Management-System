@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pharmacy.DB;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace Pharmacy.Models
 {
-    public class Registration
+    public class UserValidation
     {
         public int ID { get; set; }
 
@@ -57,6 +58,12 @@ namespace Pharmacy.Models
 
         [Display(Name = "Reason for Seeing Doctor")]
         public string ReasonForSeeingDoctor { get; set; }
+
+
+        [Display(Name = "Role Type")]
+        [Required(ErrorMessage = "provide Item Type")]
+        public Nullable<int> RoleTypeID { get; set; }
+
 
 
     }

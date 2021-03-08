@@ -1,4 +1,4 @@
-﻿@model Pharmacy.Models.Registration
+﻿@model Pharmacy.Models.UserValidation
 
 @{
     ViewBag.Title = "Registration";
@@ -45,26 +45,10 @@
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
 
-                @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-lg-2", @style = "font:unset" })
-                <div class="col-lg-3">
-                    @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-lg-6">
-                </div>
-            </div>
-
-            <div class="form-group">
                 @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-lg-2", @style = "font:unset" })
                 <div class="col-lg-3">
                     @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control", onblur = "return calculatePurchasePrice()", @Value = "15" })
                     @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
-                </div>
-                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-lg-2", @style = "font:unset" })
-                <div class="col-lg-3">
-                    @Html.DropDownListFor(model => model.City, new SelectList(Enumerable.Empty<SelectListItem>()), "Please Select",
-                   new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-lg-6">
                 </div>
@@ -74,16 +58,17 @@
                 @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-lg-2 required", @style = "font:unset" })
                 <div class="col-lg-3">
                     @Html.DropDownListFor(model => model.State, new SelectList(Enumerable.Empty<SelectListItem>()), "Please Select",
-                   new { @class = "form-control" })
+                   new { @class = "form-control", @onchange = "changeState(this.value)" })
                     @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
                 </div>
 
-                @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-lg-2 required", @style = "font:unset" })
+                @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-lg-2", @style = "font:unset" })
                 <div class="col-lg-3">
-                    @Html.DropDownListFor(model => model.Country, new SelectList(Enumerable.Empty<SelectListItem>()), "Please Select",
+                    @Html.DropDownListFor(model => model.City, new SelectList(Enumerable.Empty<SelectListItem>()), "Please Select",
                    new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="col-lg-6">
                 </div>
             </div>
@@ -133,20 +118,22 @@
                 </div>
             </div>
 
-
-
             <div class="form-group">
-                @Html.LabelFor(model => model.DoctorName, htmlAttributes: new { @class = "control-label col-lg-2", @style = "font:unset" })
+                @Html.LabelFor(model => model.RoleTypeID, htmlAttributes: new { @class = "control-label col-lg-2 required" })
+                <div class="col-lg-3">
+                    @Html.DropDownListFor(model => model.RoleTypeID, new SelectList(Enumerable.Empty<SelectListItem>()), "Please Select",
+                   new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleTypeID, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.LabelFor(model => model.DoctorName, htmlAttributes: new { @class = "control-label col-lg-2" })
                 <div class="col-lg-3">
                     @Html.EditorFor(model => model.DoctorName, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.DoctorName, "", new { @class = "text-danger" })
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-6">
                 </div>
             </div>
-
-
-
 
 
             <div class="form-group">
@@ -166,20 +153,19 @@
 
 <script type="text/javascript">
 
-
     $(document).ready(function () {
-
-
-        //Item Types/Categories ddl populated
+        debugger;
+        //Role Type ddl populated
         $.ajax({
-            url: "Patient/ddlItemType",
+            url: "/User/ddlRoleType",
             type: "GET",
             contentType: "application/json; charset=utf-8",
             datatype: "JSON",
             success: function (result) {
                 $(result).each(function () {
-                    $("#Country").append($("<option></option>").val(this.ID).html(this.Name));
-                    //$('#ItemTypeID").val(1);
+                    debugger;
+                    $("#RoleTypeID").append($("<option></option>").val(this.ID).html(this.Name));
+                    $('#RoleTypeID').val(1);
 
                 });
                 //$("#target").prop("selectedIndex", 0);
@@ -188,6 +174,87 @@
                 console.log(errorThrown);
             }
         });
+
+        ////Country ddl populated
+        //$.ajax({
+        //    url: "/User/ddlCountry",
+        //    type: "GET",
+        //    contentType: "application/json; charset=utf-8",
+        //    datatype: "JSON",
+        //    success: function (result) {
+        //        $(result).each(function () {
+        //            debugger;
+        //            $("#Country").append($("<option></option>").val(this.ID).html(this.Name));
+        //        });
+        //        //$("#target").prop("selectedIndex", 0);
+        //    },
+        //    error: function (jqXhr, textStatus, errorThrown) {
+        //        console.log(errorThrown);
+        //    }
+        //});
+
+        //State ddl populated
+        $.ajax({
+            url: "/User/ddlState",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: "JSON",
+            success: function (result) {
+                $(result).each(function () {
+                    debugger;
+                    $("#State").append($("<option></option>").val(this.ID).html(this.Name));
+                });
+                //$("#target").prop("selectedIndex", 0);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+        //City ddl populated
+        $.ajax({
+            url: "/User/ddlCity",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: "JSON",
+            success: function (result) {
+                $(result).each(function () {
+                    debugger;
+                    $("#City").append($("<option></option>").val(this.ID).html(this.Name));
+                });
+                //$("#target").prop("selectedIndex", 0);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
     });
+
+
+    function changeState(val) {
+        debugger;
+
+        $.ajax({
+            url: "/User/ddlCity",
+            type: "GET",
+            data: { stateId: val },
+            contentType: "application/json; charset=utf-8",
+            datatype: "JSON",
+            success: function (result) {
+                $("#City").html("");
+                $("#City").append($("<option></option>").html("Please Select"));
+                $(result).each(function () {
+                    debugger;
+                    $("#City").append($("<option></option>").val(this.ID).html(this.Name));
+                });
+                //$("#target").prop("selectedIndex", 0);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+    }
 
 </script>

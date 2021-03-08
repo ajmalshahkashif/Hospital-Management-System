@@ -178,8 +178,9 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\PatientController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DB\Credential.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -222,7 +223,7 @@
     </Compile>
     <Compile Include="Models\GenericRepo.cs" />
     <Compile Include="Models\IGenericRepo.cs" />
-    <Compile Include="Models\Registration.cs" />
+    <Compile Include="Models\UserValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +247,7 @@
     <Content Include="Content\kendo.common.min.css" />
     <Content Include="Content\kendo.default.css" />
     <Content Include="Content\themeTest.css" />
+    <Content Include="DB Script.txt" />
     <Content Include="DB\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -349,8 +351,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LayoutLeftMenu.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Patient\Registration.cshtml" />
-    <Content Include="Views\Patient\AllPatients.cshtml" />
+    <Content Include="Views\User\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
