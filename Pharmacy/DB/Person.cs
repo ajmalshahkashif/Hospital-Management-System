@@ -12,8 +12,14 @@ namespace Pharmacy.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Person
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Person()
+        {
+            this.People1 = new HashSet<Person>();
+        }
+    
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,12 +27,12 @@ namespace Pharmacy.DB
         public string PhoneNo { get; set; }
         public string MobileNo { get; set; }
         public Nullable<int> LocationId { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public Nullable<int> Age { get; set; }
         public string Gender { get; set; }
         public string MaritalStatus { get; set; }
         public Nullable<int> Weight { get; set; }
         public Nullable<int> Height { get; set; }
-        public string DoctorName { get; set; }
+        public Nullable<int> PeopleId { get; set; }
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public string CreatedBy { get; set; }
@@ -36,6 +42,9 @@ namespace Pharmacy.DB
         public string Comments { get; set; }
     
         public virtual Location Location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Person> People1 { get; set; }
+        public virtual Person Person1 { get; set; }
         public virtual Role Role { get; set; }
     }
 }

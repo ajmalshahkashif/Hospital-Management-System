@@ -18,7 +18,7 @@ namespace Pharmacy.DB
         public Location()
         {
             this.Location1 = new HashSet<Location>();
-            this.Users = new HashSet<User>();
+            this.People = new HashSet<Person>();
         }
     
         public int Id { get; set; }
@@ -30,6 +30,6 @@ namespace Pharmacy.DB
         public virtual ICollection<Location> Location1 { get; set; }
         public virtual Location Location2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Person> People { get; set; }
     }
 }

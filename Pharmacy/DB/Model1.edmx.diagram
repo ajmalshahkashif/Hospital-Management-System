@@ -6,15 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="50f596ea902a4e4b80b2164ec0886ead" Name="Diagram1">
         <EntityTypeShape EntityType="HospitalModel.Credential" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="HospitalModel.Location" Width="1.5" PointX="0.75" PointY="2.375" />
-        <EntityTypeShape EntityType="HospitalModel.Role" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="HospitalModel.Location" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="HospitalModel.Role" Width="1.5" PointX="0.75" PointY="2.75" />
         <EntityTypeShape EntityType="HospitalModel.CredentialRole" Width="1.5" PointX="5.75" PointY="3.75" />
         <EntityTypeShape EntityType="HospitalModel.Permission" Width="1.5" PointX="5.75" PointY="6.75" />
         <EntityTypeShape EntityType="HospitalModel.RolePermission" Width="1.5" PointX="7.75" PointY="0.75" />
         <AssociationConnector Association="HospitalModel.FK_Location_Location1" />
-        <EntityTypeShape EntityType="HospitalModel.User" Width="1.5" PointX="3" PointY="3.375" />
-        <AssociationConnector Association="HospitalModel.FK_User_Location" />
-        <AssociationConnector Association="HospitalModel.FK_User_Role" />
+        <EntityTypeShape EntityType="HospitalModel.Person" Width="1.5" PointX="3" PointY="3.625" />
+        <AssociationConnector Association="HospitalModel.FK_People_Location" />
+        <AssociationConnector Association="HospitalModel.FK_People_People1" />
+        <AssociationConnector Association="HospitalModel.FK_People_Role" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

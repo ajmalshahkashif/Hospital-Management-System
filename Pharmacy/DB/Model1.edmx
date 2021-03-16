@@ -33,6 +33,31 @@ warning 6002: The table/view 'Hospital.dbo.CredentialRole' does not have a prima
           <Property Name="Type" Type="varchar" MaxLength="50" />
           <Property Name="ParentId" Type="int" />
         </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LocationId" Type="int" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaritalStatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="Weight" Type="int" />
+          <Property Name="Height" Type="int" />
+          <Property Name="PeopleId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="ReasonForSeeingDoctor" Type="nvarchar" MaxLength="200" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Hospital.dbo.Permission' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Permission">
@@ -65,31 +90,6 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="PermissionId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="PhoneNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="LocationId" Type="int" />
-          <Property Name="DateOfBirth" Type="date" />
-          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
-          <Property Name="MaritalStatus" Type="nvarchar" MaxLength="50" />
-          <Property Name="Weight" Type="int" />
-          <Property Name="Height" Type="int" />
-          <Property Name="DoctorName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar" MaxLength="200" />
-          <Property Name="IsActive" Type="bit" />
-          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="datetime" />
-          <Property Name="RoleId" Type="int" />
-          <Property Name="ReasonForSeeingDoctor" Type="nvarchar" MaxLength="200" />
-          <Property Name="Comments" Type="nvarchar" MaxLength="200" />
-        </EntityType>
         <Association Name="FK_Location_Location1">
           <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
           <End Role="Location1" Type="Self.Location" Multiplicity="*" />
@@ -102,26 +102,38 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Location">
+        <Association Name="FK_People_Location">
           <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="People">
               <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Role">
+        <Association Name="FK_People_People1">
+          <End Role="People" Type="Self.People" Multiplicity="0..1" />
+          <End Role="People1" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="People1">
+              <PropertyRef Name="PeopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="People">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
@@ -129,8 +141,8 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
         <EntityContainer Name="HospitalModelStoreContainer">
           <EntitySet Name="Credential" EntityType="Self.Credential" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CredentialRole" EntityType="Self.CredentialRole" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [CredentialRole].[RoleId] AS [RoleId], 
@@ -155,13 +167,17 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             <End Role="Location" EntitySet="Location" />
             <End Role="Location1" EntitySet="Location" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Location" Association="Self.FK_User_Location">
+          <AssociationSet Name="FK_People_Location" Association="Self.FK_People_Location">
             <End Role="Location" EntitySet="Location" />
-            <End Role="User" EntitySet="User" />
+            <End Role="People" EntitySet="People" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+          <AssociationSet Name="FK_People_People1" Association="Self.FK_People_People1">
+            <End Role="People" EntitySet="People" />
+            <End Role="People1" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Role" Association="Self.FK_People_Role">
             <End Role="Role" EntitySet="Role" />
-            <End Role="User" EntitySet="User" />
+            <End Role="People" EntitySet="People" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -179,14 +195,18 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             <End Role="Location" EntitySet="Locations" />
             <End Role="Location1" EntitySet="Locations" />
           </AssociationSet>
-          <EntitySet Name="Users" EntityType="HospitalModel.User" />
-          <AssociationSet Name="FK_User_Location" Association="HospitalModel.FK_User_Location">
+          <EntitySet Name="People" EntityType="HospitalModel.Person" />
+          <AssociationSet Name="FK_People_Location" Association="HospitalModel.FK_People_Location">
             <End Role="Location" EntitySet="Locations" />
-            <End Role="User" EntitySet="Users" />
+            <End Role="Person" EntitySet="People" />
           </AssociationSet>
-          <AssociationSet Name="FK_User_Role" Association="HospitalModel.FK_User_Role">
+          <AssociationSet Name="FK_People_People1" Association="HospitalModel.FK_People_People1">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Person1" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="FK_People_Role" Association="HospitalModel.FK_People_Role">
             <End Role="Role" EntitySet="Roles" />
-            <End Role="User" EntitySet="Users" />
+            <End Role="Person" EntitySet="People" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Credential">
@@ -208,7 +228,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="ParentId" Type="Int32" />
           <NavigationProperty Name="Location1" Relationship="HospitalModel.FK_Location_Location1" FromRole="Location" ToRole="Location1" />
           <NavigationProperty Name="Location2" Relationship="HospitalModel.FK_Location_Location1" FromRole="Location1" ToRole="Location" />
-          <NavigationProperty Name="Users" Relationship="HospitalModel.FK_User_Location" FromRole="Location" ToRole="User" />
+          <NavigationProperty Name="People" Relationship="HospitalModel.FK_People_Location" FromRole="Location" ToRole="Person" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -220,7 +240,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isActive" Type="Boolean" />
-          <NavigationProperty Name="Users" Relationship="HospitalModel.FK_User_Role" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="People" Relationship="HospitalModel.FK_People_Role" FromRole="Role" ToRole="Person" />
         </EntityType>
         <EntityType Name="CredentialRole">
           <Key>
@@ -259,7 +279,7 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="User">
+        <EntityType Name="Person">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -270,12 +290,12 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="PhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LocationId" Type="Int32" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Age" Type="Int32" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="MaritalStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Weight" Type="Int32" />
           <Property Name="Height" Type="Int32" />
-          <Property Name="DoctorName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PeopleId" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -283,29 +303,43 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
           <Property Name="RoleId" Type="Int32" />
           <Property Name="ReasonForSeeingDoctor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Comments" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Location" Relationship="HospitalModel.FK_User_Location" FromRole="User" ToRole="Location" />
-          <NavigationProperty Name="Role" Relationship="HospitalModel.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Location" Relationship="HospitalModel.FK_People_Location" FromRole="Person" ToRole="Location" />
+          <NavigationProperty Name="People1" Relationship="HospitalModel.FK_People_People1" FromRole="Person" ToRole="Person1" />
+          <NavigationProperty Name="Person1" Relationship="HospitalModel.FK_People_People1" FromRole="Person1" ToRole="Person" />
+          <NavigationProperty Name="Role" Relationship="HospitalModel.FK_People_Role" FromRole="Person" ToRole="Role" />
         </EntityType>
-        <Association Name="FK_User_Location">
+        <Association Name="FK_People_Location">
           <End Type="HospitalModel.Location" Role="Location" Multiplicity="0..1" />
-          <End Type="HospitalModel.User" Role="User" Multiplicity="*" />
+          <End Type="HospitalModel.Person" Role="Person" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Location">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="Person">
               <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Role">
+        <Association Name="FK_People_People1">
+          <End Type="HospitalModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="HospitalModel.Person" Role="Person1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Person1">
+              <PropertyRef Name="PeopleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_People_Role">
           <End Type="HospitalModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="HospitalModel.User" Role="User" Multiplicity="*" />
+          <End Type="HospitalModel.Person" Role="Person" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="User">
+            <Dependent Role="Person">
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
@@ -374,9 +408,9 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="HospitalModel.User">
-              <MappingFragment StoreEntitySet="User">
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="HospitalModel.Person">
+              <MappingFragment StoreEntitySet="People">
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="ReasonForSeeingDoctor" ColumnName="ReasonForSeeingDoctor" />
                 <ScalarProperty Name="RoleId" ColumnName="RoleId" />
@@ -384,12 +418,12 @@ warning 6002: The table/view 'Hospital.dbo.RolePermission' does not have a prima
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="PeopleId" ColumnName="PeopleId" />
                 <ScalarProperty Name="Height" ColumnName="Height" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
                 <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />

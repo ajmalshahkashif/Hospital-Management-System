@@ -17,7 +17,7 @@ namespace Pharmacy.DB
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Role()
         {
-            this.Users = new HashSet<User>();
+            this.People = new HashSet<Person>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace Pharmacy.DB
         public Nullable<bool> isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Person> People { get; set; }
     }
 }

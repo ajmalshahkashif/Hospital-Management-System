@@ -28,14 +28,13 @@ namespace Pharmacy.Models
         [DataType(DataType.PhoneNumber)]
         public string MobileNo { get; set; }
 
-        public Nullable<int> City { get; set; }
+        public string City { get; set; }
 
         public string State { get; set; }
 
         public Nullable<int> Country { get; set; }
 
-        [DataType(DataType.Date, ErrorMessage ="Invalid Date of Birth")]
-        public DateTime DOB { get; set; }
+        public Nullable<int> Age { get; set; }
 
         [Required(ErrorMessage = "Please Provide Gender")]
         public string Gender { get; set; }
@@ -49,7 +48,9 @@ namespace Pharmacy.Models
 
         [Display(Name = "Doctor Name")]
         [Required(ErrorMessage = "Please Provide Doctor Name")]
-        public string DoctorName { get; set; }
+        public string DoctorID { get; set; }
+
+
 
         public string Description { get; set; }
 

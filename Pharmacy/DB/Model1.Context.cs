@@ -31,6 +31,6 @@ namespace Pharmacy.DB
         public virtual DbSet<CredentialRole> CredentialRoles { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Person> People { get; set; }
     }
 }
